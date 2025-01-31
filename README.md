@@ -1,6 +1,9 @@
 # Towards a Perspectivist Turn in Argument Quality Assessment
 
 ## Database
+An interactive version of the database is available under: https://goofy-grouse-1da.notion.site/AQ-DQ-Datasets-e3e5886191ef472aaffb47fec0daea92
+
+The underlying csv file can be found in the *Database folder*.
 
 ## Experiments
 To reproduce our analyses, request the raw data from the respective original authors.
