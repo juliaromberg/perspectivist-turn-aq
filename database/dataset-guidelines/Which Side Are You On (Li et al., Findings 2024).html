@@ -1,0 +1,909 @@
+<script src="https://assets.crowd.aws/crowd-html-elements.js" xmlns=""></script>
+
+<style>
+    h3 {
+        margin-top: 10px;
+    }
+
+    crowd-card {
+        width: 100%;
+
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        height: fit-content;
+    }
+
+    .container>div {
+        margin: 20px;
+    }
+
+    .column {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: minmax(150px, max-content) auto;
+    }
+
+    .card1 {
+        margin: 10px;
+        white-space: pre-wrap;
+    }
+
+    .card2 {
+        margin: 10px;
+        white-space: pre-wrap;
+    }
+
+    .card3 {
+        margin: 10px;
+        white-space: pre-wrap;
+    }
+
+    .card4 {
+        margin: 10px;
+        white-space: pre-wrap;
+    }
+
+    .card5 {
+        margin: 10px;
+        white-space: pre-wrap;
+    }
+
+    .radio-box {
+        margin-bottom: 20px;
+        height: fit-content;
+        padding-bottom: 10px;
+    }
+
+    .claim {}
+
+    .claim::before {
+        content: "Claim: ";
+        font-weight: bold;
+        color: chocolate;
+    }
+
+    .explanation {}
+
+    .explanation:before {
+        content: "Explanation: ";
+        font-weight: bold;
+        color: goldenrod;
+
+    }
+
+    .example {
+        margin: 5px;
+        background-color: aliceblue;
+    }
+
+    .example:before {
+        content: "Example: ";
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .article:before {
+        content: "Article: ";
+        font-weight: bold;
+        font-size: large;
+        color: cornflowerblue;
+    }
+
+    .warning {
+        font-weight: bold;
+        font-size: larger;
+        color: red;
+        animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+        0% {
+            opacity: 0.33;
+        }
+    }
+
+    .spoiler,
+    .spoiler>* {
+        transition: color 0.5s, opacity 0.5s
+    }
+
+    .spoiler:not(:hover) {
+        color: transparent
+    }
+
+    .spoiler:not(:hover)>* {
+        opacity: 0
+    }
+
+    /* fix weird transitions on Chrome: */
+    blockquote,
+    blockquote>*:not(a) {
+        color: black
+    }
+
+    .container1 {
+    width: 100%;
+    margin: 20px;
+    padding-bottom: 30px;
+  }
+
+    .center {
+      line-height: 30px;
+      height: 5px;
+      text-align: center;
+      margin-top: 0;
+      vertical-align:top;
+      margin-right: 0px;
+      display: flex;
+      flex-direction: column
+    }
+    .panel-left {
+        float: left;
+        width: 45%;
+        height: 50%;
+
+    }
+    .panel-right {
+        float: right;
+        width: 45%
+    }
+
+    .left {
+    width: 70%;
+    margin-top: 0;
+    vertical-align:top;
+    margin-right: 10px;
+    display: inline-block;
+    }
+
+    .right {
+        width: 20%;
+        margin-top: 0;
+        vertical-align:top;
+        display: inline-block;
+    }
+
+    .highlight2 {
+        background-color: pink;
+    }
+    .highlight3 {
+        background-color: lightgreen;
+    }
+
+    .highlight4 {
+        background-color: #e0ffff;
+    }
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover, .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+
+</style>
+
+<div id="errorBox"></div>
+<crowd-form>
+    <short-instructions>
+        <p><strong>If, for any reason, you do not consent to performing this annotation task, please do not proceed. You should only proceed with this job if you agree with what is being asked for, as outlined in the above instructions.</strong>
+        </p>
+        Task description: Our task is to identify the appropriate evidence for the stated argument. According to recent
+        research in the field, for a piece of evidence to be considered as supportive, it should fulfill two criteria: it
+        should be both relevant and supportive to the argument in question.
+        <ol>
+            <li>In this task, each snippet is a potential candidate for evidence.</li>
+            <li>Answer the questions based on the given snippet.</li>
+            <li>Select the most convincing evidence to support the key points.</li>
+            <li>Please click more instructions to read detail explaination.</li>
+        </ol>
+    </short-instructions>
+    <full-instructions>
+        <h3> What is argumentative persuasiveness? </h3>
+        <p>In a debate, persuasiveness refers to the ability of an argument or speaker to <mark
+                class='highlight4'><em>influence</em></mark> or <mark class='highlight4'><em>convince</em></mark> others to
+            <mark class='highlight4'><em>adopt</em></mark> a particular point of view or <mark
+                class='highlight4'><em>accept</em></mark> a certain idea. Persuasiveness involves the use of logical
+            reasoning, evidence, and effective communication skills to present a convincing argument. A persuasive argument
+            is one that is well-supported, compelling, and able to <mark class='highlight4'><em>sway</em></mark> the
+            opinions of the audience or opponents. Persuasiveness is an important factor in a successful debate, as it
+            allows debaters to effectively communicate their ideas and arguments and increase the likelihood of winning the
+            debate.</p>
+        <p><strong>In short, persuasiveness is the ability to make someone believe that something is true or right.</strong>
+        </p>
+        <h3>What is an argument? </h3>
+        <p>In a debate, an argument refers to a set of reasons, evidence, or facts presented by a debater in support of
+            their stance or position on a particular topic or issue. An argument in a debate aims to persuade the audience
+            or the opponent that the debater's position is credible and well-supported. The argument should be logically
+            sound, well-structured, and persuasive, and should address counterarguments and objections that the opponent may
+            raise. The goal of an argument in a debate is to win over the audience or the opponent by presenting a
+            compelling case for the debater's position.</p>
+        <h3>What is evidence? </h3>
+        <p>In the context of a debate, evidence refers to information, data, or facts that are used to support a particular
+            argument or claim. Evidence is considered relevant to a debate topic if it directly relates to and supports the
+            argument being made and provides support for the position being taken on the issue being debated. Relevant
+            evidence is usually credible, trustworthy, and verifiable and provides strong support for the argument being
+            made. It can come from a variety of sources, including expert testimony, empirical data, or historical events.
+        </p>
+    </full-instructions>
+
+        <div id="spoiler" style="display:block" onclick="document.getElementById('spoiler').style.display='none'">
+            <p><strong>If, for any reason, you do not consent to performing this annotation task, please do not proceed. You should only proceed with this job if you agree with what is being asked for, as outlined in the above instructions.</strong>
+        </p>
+            <p class="warning">Tips: You can click on the left side of the screen to select 'left' or click on the right side of the screen to select
+            'right'.</p>
+            <p>(Click on the message to remove the annoying blinking.)</p>
+        </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Consent Form</h3>
+                <ol>
+                <li>I confirm that I have read the attached information sheet (Version 1, Date 1/10/2023) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.</li>
+                <li>I understand that my participation in the study is voluntary and that I am free to withdraw at any time without giving a reason and without detriment to myself.  I understand that it will not be possible to remove my data from the project once it has been anonymised and forms part of the data set.  I agree to take part on this basis.
+                </li>
+                <li>I agree that any data collected may be included in anonymous form in publications/conference presentations.</li>
+                <li>I agree that any research publications can include direct quotes of my responses in anonymous format.</li>
+                <li>I understand that a fully anonymised dataset will be deposited in an open data repository at the end of the project.</li>
+                <li>I understand that data collected during the study may be looked at by individuals from The University of Manchester or regulatory authorities, where it is relevant to my taking part in this research. I give permission for these individuals to have access to my data.</li>
+                <li>I understand that there may be instances where during the course of the research information is revealed which means the researchers will be obliged to break confidentiality and this has been explained in more detail in the information sheet. </li>
+                <li>I agree to take part in this study.</li>
+            </ol>
+
+            <h3>Data Protection</h3>
+            <p>The personal information we collect and use to conduct this research will be processed in accordance with UK data protection law as explained in the Participant Information Sheet and the Privacy Notice for Research Participants. </p>
+                <button id="accept">Accept</button>
+                <button id="reject">Reject</button>
+            </div>
+        </div>
+
+    
+    
+    <crowd-tabs id="crowd-tabs">
+        <crowd-tab header="Tab 1" id="tab1" class="container">
+            <div class="panel" style="text-align: center;", id="firstForm1">
+                <div>
+                    <h3>Topic:</h3>
+                    <crowd-card>
+                        <div className="card1">${topic_0}</div>
+                    </crowd-card>
+                </div>
+
+                <div>
+                    <h3>Argument:</h3>
+                    <crowd-card>
+                        <div className="card1">${key_point_0}</div>
+                    </crowd-card>
+                </div>
+                    
+                    <h3>In a conversation about the <span class='highlight3'>Argument</span>, where you can only give a
+                        <span class='highlight2'> single</span> evidence out of the following two which one would you rather
+                        use?
+                    </h3>
+                    <div class="panel">
+                        <div class="panel-left">
+                            <crowd-card>
+                                <div class="card1">
+                                    ${snippets_1_0}
+                                </div>
+                            </crowd-card>
+                        </div>
+    
+                        <div class="panel-right">
+                            <crowd-card>
+                                <div class="card1">
+                                    ${snippets_2_0}
+                                </div>
+                            </crowd-card>
+                        </div>
+                    </div>
+                        <input type="radio" id="left_1" name="verdict_1" value="left" required><label
+                            for="left_1"><span></span>Left</label>
+                        <input type="radio" id="right_1" name="verdict_1" value="right" required><label
+                            for="right_1"><span></span>Right</label>
+                    </div>
+            </div>
+        </crowd-tab>
+
+        <crowd-tab header="Tab 2" id="tab2" class="container">
+            <div class="panel" style="text-align: center;" , id="firstForm2">
+                <div>
+                    <h3>Topic:</h3>
+                    <crowd-card>
+                        <div className="card2">${topic_1}</div>
+                    </crowd-card>
+                </div>
+                
+                <div>
+                    <h3>Argument:</h3>
+                    <crowd-card>
+                        <div className="card2">${key_point_1}</div>
+                    </crowd-card>
+                </div>
+        
+        
+                    <h3>In a conversation about the <span class='highlight3'>Argument</span>, where you can only give a
+                        <span class='highlight2'> single</span> evidence out of the following two which one would you rather
+                        use?
+                    </h3>
+                    <div class="panel">
+                        <div class="panel-left">
+                            <crowd-card>
+                                <div class="card2">
+                                    ${snippets_1_1}
+                                </div>
+                            </crowd-card>
+                        </div>
+        
+                        <div class="panel-right">
+                            <crowd-card>
+                                <div class="card2">
+                                    ${snippets_2_1}
+                                </div>
+                            </crowd-card>
+                        </div>
+                    </div>
+                    <input type="radio" id="left_2" name="verdict_2" value="left" required><label
+                        for="left_2"><span></span>Left</label>
+                    <input type="radio" id="right_2" name="verdict_2" value="right" required><label
+                        for="right_2"><span></span>Right</label>
+                </div>
+            </div>
+        </crowd-tab>
+
+        <crowd-tab header="Tab 3" id="tab3" class="container">
+            <div class="panel" style="text-align: center;" , id="firstForm3">
+                <div>
+                    <h3>Topic:</h3>
+                    <crowd-card>
+                        <div className="card3">${topic_2}</div>
+                    </crowd-card>
+                </div>
+        
+                <div>
+                    <h3>Argument:</h3>
+                    <crowd-card>
+                        <div className="card3">${key_point_2}</div>
+                    </crowd-card>
+                </div>
+        
+                <h3>In a conversation about the <span class='highlight3'>Argument</span>, where you can only give a
+                    <span class='highlight2'> single</span> evidence out of the following two which one would you rather
+                    use?
+                </h3>
+                <div class="panel">
+                    <div class="panel-left">
+                        <crowd-card>
+                            <div class="card3">
+                                ${snippets_1_2}
+                            </div>
+                        </crowd-card>
+                    </div>
+        
+                    <div class="panel-right">
+                        <crowd-card>
+                            <div class="card3">
+                                ${snippets_2_2}
+                            </div>
+                        </crowd-card>
+                    </div>
+                </div>
+                <input type="radio" id="left_3" name="verdict_3" value="left" required><label
+                    for="left_3"><span></span>Left</label>
+                <input type="radio" id="right_3" name="verdict_3" value="right" required><label
+                    for="right_3"><span></span>Right</label>
+            </div>
+            </div>
+        </crowd-tab>
+
+        <crowd-tab header="Tab 4" id="tab4" class="container">
+            <div class="panel" style="text-align: center;" , id="firstForm4">
+                <div>
+                    <h3>Topic:</h3>
+                    <crowd-card>
+                        <div className="card4">${topic_3}</div>
+                    </crowd-card>
+                </div>
+        
+                <div>
+                    <h3>Argument:</h3>
+                    <crowd-card>
+                        <div className="card4">${key_point_3}</div>
+                    </crowd-card>
+                </div>
+        
+                <h3>In a conversation about the <span class='highlight3'>Argument</span>, where you can only give a
+                    <span class='highlight2'> single</span> evidence out of the following two which one would you rather
+                    use?
+                </h3>
+                <div class="panel">
+                    <div class="panel-left">
+                        <crowd-card>
+                            <div class="card4">
+                                ${snippets_1_3}
+                            </div>
+                        </crowd-card>
+                    </div>
+        
+                    <div class="panel-right">
+                        <crowd-card>
+                            <div class="card4">
+                                ${snippets_2_3}
+                            </div>
+                        </crowd-card>
+                    </div>
+                </div>
+                <input type="radio" id="left_4" name="verdict_4" value="left" required><label
+                    for="left_4"><span></span>Left</label>
+                <input type="radio" id="right_4" name="verdict_4" value="right" required><label
+                    for="right_4"><span></span>Right</label>
+            </div>
+            </div>
+        </crowd-tab>
+
+        <crowd-tab header="Tab 5" id="tab5" class="container">
+            <div class="panel" style="text-align: center;" , id="firstForm">
+                <div>
+                    <h3>Topic:</h3>
+                    <crowd-card>
+                        <div className="card5">${topic_4}</div>
+                    </crowd-card>
+                </div>
+        
+                <div>
+                    <h3>Argument:</h3>
+                    <crowd-card>
+                        <div className="card5">${key_point_4}</div>
+                    </crowd-card>
+                </div>
+        
+                <h3>In a conversation about the <span class='highlight3'>Argument</span>, where you can only give a
+                    <span class='highlight2'> single</span> evidence out of the following two which one would you rather
+                    use?
+                </h3>
+                <div class="panel">
+                    <div class="panel-left">
+                        <crowd-card>
+                            <div class="card5">
+                                ${snippets_1_4}
+                            </div>
+                        </crowd-card>
+                    </div>
+        
+                    <div class="panel-right">
+                        <crowd-card>
+                            <div class="card5">
+                                ${snippets_2_4}
+                            </div>
+                        </crowd-card>
+                    </div>
+                </div>
+                <input type="radio" id="left_5" name="verdict_5" value="left" required><label
+                    for="left_5"><span></span>Left</label>
+                <input type="radio" id="right_5" name="verdict_5" value="right" required><label
+                    for="right_5"><span></span>Right</label>
+                </div>
+            
+            </div>
+        </crowd-tab>
+
+    </crowd-tabs>
+ 
+    
+</crowd-form>
+
+<script>
+    // Add a click event listener to the whole document
+    const tab1 = document.getElementById('tab1');
+    tab1.addEventListener('click', function (event) {
+        // Get the X and Y coordinates of the click
+        const x = event.clientX;
+        const y = event.clientY;
+        // Get the width and height of the viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        // Calculate the dimensions of the square box
+        const boxWidth = 1500;
+        const boxHeight = 5000;
+        const boxX = (viewportWidth - boxWidth) / 2;
+        const boxY = (viewportHeight - boxHeight) / 2;
+        // Check whether the click is inside the square box
+        if (x >= boxX && x < boxX + boxWidth && y >= boxY && y < boxY + boxHeight) {
+            // Click was inside the square box
+            const leftRadio = document.getElementById('left_1');
+            const rightRadio = document.getElementById('right_1');
+            if (x < boxX + boxWidth / 2) {
+                // Click was on the left side of the square box, select the left radio button
+                leftRadio.checked = true;
+            } else {
+                // Click was on the right side of the square box, select the right radio button
+                rightRadio.checked = true;
+            }
+        }
+    });
+</script>
+
+<script>
+    // Add a click event listener to the whole document
+    const tab2 = document.getElementById('tab2');
+    tab2.addEventListener('click', function (event) {
+        // Get the X and Y coordinates of the click
+        const x = event.clientX;
+        const y = event.clientY;
+        // Get the width and height of the viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        // Calculate the dimensions of the square box
+        const boxWidth = 1500;
+        const boxHeight = 5000;
+        const boxX = (viewportWidth - boxWidth) / 2;
+        const boxY = (viewportHeight - boxHeight) / 2;
+        // Check whether the click is inside the square box
+        if (x >= boxX && x < boxX + boxWidth && y >= boxY && y < boxY + boxHeight) {
+            // Click was inside the square box
+            const leftRadio = document.getElementById('left_2');
+            const rightRadio = document.getElementById('right_2');
+            if (x < boxX + boxWidth / 2) {
+                // Click was on the left side of the square box, select the left radio button
+                leftRadio.checked = true;
+            } else {
+                // Click was on the right side of the square box, select the right radio button
+                rightRadio.checked = true;
+            }
+        }
+    });
+</script>
+
+<script>
+    // Add a click event listener to the whole document
+    const tab3 = document.getElementById('tab3');
+    tab3.addEventListener('click', function (event) {
+        // Get the X and Y coordinates of the click
+        const x = event.clientX;
+        const y = event.clientY;
+        // Get the width and height of the viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        // Calculate the dimensions of the square box
+        const boxWidth = 1500;
+        const boxHeight = 5000;
+        const boxX = (viewportWidth - boxWidth) / 2;
+        const boxY = (viewportHeight - boxHeight) / 2;
+        // Check whether the click is inside the square box
+        if (x >= boxX && x < boxX + boxWidth && y >= boxY && y < boxY + boxHeight) {
+            // Click was inside the square box
+            const leftRadio = document.getElementById('left_3');
+            const rightRadio = document.getElementById('right_3');
+            if (x < boxX + boxWidth / 2) {
+                // Click was on the left side of the square box, select the left radio button
+                leftRadio.checked = true;
+            } else {
+                // Click was on the right side of the square box, select the right radio button
+                rightRadio.checked = true;
+            }
+        }
+    });
+</script>
+
+<script>
+    // Add a click event listener to the whole document
+    const tab4 = document.getElementById('tab4');
+    tab4.addEventListener('click', function (event) {
+        // Get the X and Y coordinates of the click
+        const x = event.clientX;
+        const y = event.clientY;
+        // Get the width and height of the viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        // Calculate the dimensions of the square box
+        const boxWidth = 1500;
+        const boxHeight = 5000;
+        const boxX = (viewportWidth - boxWidth) / 2;
+        const boxY = (viewportHeight - boxHeight) / 2;
+        // Check whether the click is inside the square box
+        if (x >= boxX && x < boxX + boxWidth && y >= boxY && y < boxY + boxHeight) {
+            // Click was inside the square box
+            const leftRadio = document.getElementById('left_4');
+            const rightRadio = document.getElementById('right_4');
+            if (x < boxX + boxWidth / 2) {
+                // Click was on the left side of the square box, select the left radio button
+                leftRadio.checked = true;
+            } else {
+                // Click was on the right side of the square box, select the right radio button
+                rightRadio.checked = true;
+            }
+        }
+    });
+</script>
+
+<script>
+    // Add a click event listener to the whole document
+    const tab5 = document.getElementById('tab5');
+    tab5.addEventListener('click', function (event) {
+        // Get the X and Y coordinates of the click
+        const x = event.clientX;
+        const y = event.clientY;
+        // Get the width and height of the viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        // Calculate the dimensions of the square box
+        const boxWidth = 1500;
+        const boxHeight = 5000;
+        const boxX = (viewportWidth - boxWidth) / 2;
+        const boxY = (viewportHeight - boxHeight) / 2;
+        // Check whether the click is inside the square box
+        if (x >= boxX && x < boxX + boxWidth && y >= boxY && y < boxY + boxHeight) {
+            // Click was inside the square box
+            const leftRadio = document.getElementById('left_5');
+            const rightRadio = document.getElementById('right_5');
+            if (x < boxX + boxWidth / 2) {
+                // Click was on the left side of the square box, select the left radio button
+                leftRadio.checked = true;
+            } else {
+                // Click was on the right side of the square box, select the right radio button
+                rightRadio.checked = true;
+            }
+        }
+    });
+</script>
+
+<script>
+    $('.card1').filter(function () {
+        return $.trim($(this).text()) === ''
+    }).hide();
+
+    if ($('.card1').is(":hidden")) {
+        $('.container1').hide();
+        $("input[name='verdict_1'], input[name='verdict_2']").prop("required", false);
+    }
+</script>
+
+<script>
+    $('.card2').filter(function () {
+        return $.trim($(this).text()) === ''
+    }).hide();
+
+    if ($('.card2').is(":hidden")) {
+        $('.container2').hide();
+        $("input[name='verdict_3'], input[name='verdict_4']").prop("required", false);
+    }
+</script>
+
+<script>
+    $('.card3').filter(function () {
+        return $.trim($(this).text()) === ''
+    }).hide();
+
+    if ($('.card3').is(":hidden")) {
+        $('.container3').hide();
+        $("input[name='verdict_5'], input[name='verdict_6']").prop("required", false);
+    }
+</script>
+
+<script>
+    $('.card4').filter(function () {
+        return $.trim($(this).text()) === ''
+    }).hide();
+
+    if ($('.card4').is(":hidden")) {
+        $('.container4').hide();
+        $("input[name='verdict_7'], input[name='verdict_8']").prop("required", false);
+    }
+</script>
+
+<script>
+    $('.card5').filter(function () {
+        return $.trim($(this).text()) === ''
+    }).hide();
+
+    if ($('.card5').is(":hidden")) {
+        $('.container5').hide();
+        $("input[name='verdict_9'], input[name='verdict_10']").prop("required", false);
+    }
+</script>
+
+<script>
+
+    
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    
+    // Get the buttons
+    var acceptBtn = document.getElementById("accept");
+    var rejectBtn = document.getElementById("reject");
+    
+    // Display the modal when the page loads
+    window.onload = function() {
+        modal.style.display = "block";
+    }
+    
+    // When the user clicks on "accept", close the modal
+    acceptBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // When the user clicks on "reject", disable the form and display a message
+    rejectBtn.onclick = function() {
+        modal.style.display = "none";
+        document.querySelector("crowd-form").innerHTML = "You must accept the terms to continue.";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    document.querySelector(".close").onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+
+<script>
+    function reset(i) {
+        document
+            .getElementById("firstForm" + i)
+            .querySelectorAll('input[name="rate"]').forEach((e) => e.checked = false);
+        document
+            .getElementById("firstForm" + i)
+            .querySelectorAll('input[name="verdict"]').forEach((e) => e.checked = false);
+        document.getElementById("right" + i).style = 'display: none;';
+    }
+
+    function uncoverSecondPart(i) {
+        document.getElementById("right" + i).style = '';
+    }
+
+    document.addEventListener('all-crowd-elements-ready', () => {
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById('firstForm' + i).addEventListener("click", function (event) {
+                if (event.target && event.target.matches("input[type='radio']")) {
+                    uncoverSecondPart(i);
+                }
+            });
+        }
+
+        let hasSubmitted = false;
+
+        document.querySelector('crowd-form').onsubmit = function (event) {
+            errorBox.innerHTML = '';
+            let allChecked = makingSureChecked();
+            console.log(event);
+            console.log("is all checked?" + allChecked);
+            if (!allChecked.every(elem => !!elem)) {
+                event.preventDefault();
+                let i = 1;
+                let errors = [];
+                allChecked.forEach(function (elem) {
+                    if (elem === false) {
+                        console.log(event);
+                        console.log(errorBox);
+                        errors.push("Please assign a rating to items in Tab " + i + "!");
+                    }
+                    i++;
+                })
+                errorBox.innerHTML = "<crowd-alert type='error'>" + errors.join('<br/>') + "</crowd-alert>";
+                errorBox.scrollIntoView();
+                return
+            }
+
+            if (hasSubmitted) {
+                event.preventDefault();
+                errorBox.innerHTML = "<crowd-alert type='error'>You have already submitted your qualification!</crowd-alert>";
+                errorBox.scrollIntoView();
+            } else {
+                const workerID = params.get("workerId");
+                const url = "https://mturk.schlegel-online.de/save?worker_id=";
+                // const workerID = 'ABCD123456';
+                // const url = "http://localhost:5000/save?worker_id="
+                let request = new XMLHttpRequest();
+                request.open("POST", url + workerID + "&key=Asdf1234");
+                request.send();
+                myTimeout = setTimeout(confirm("Thank you for participating in the qualification! Check back in for the main task! Please leave this popup up for a second."), 1000);
+
+                // const workerID = 'ABCD123456';
+                // const url = 'http://localhost:5000/?save_worker_id='
+                // res = await fetch(url + workerID + "&key=Asdf1234").then(function (response) {
+                //     return response.json();
+                // }).then(function (data) {
+                //     console.log("The response is:" + data);
+
+                // }).catch(function (error) {
+                //     console.log(error);
+                // });
+                // console.log("result" + res);
+            }
+
+        };
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get('mode') !== "requester-preview") {
+            const workerID = params.get("workerId");
+            const url = "https://mturk.schlegel-online.de/?worker_id=";
+            // const workerID = 'ABCD123456';
+            // const url = 'http://localhost:5000/?worker_id='
+            fetch(url + workerID).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log("The response is:" + data);
+                if (data === true) {
+                    alert("You have already obtained this qualification! " +
+                        "You can work on the full task instead! " +
+                        "Please hit 'Return' to return this HIT to the pool as you won't be able to submit it!");
+                    hasSubmitted = true;
+                }
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+        } else {
+            console.log('Preview mode.');
+        }
+
+
+        function makingSureChecked() {
+            let result = [];
+            for (let j = 1; j <= 5; j++) {
+                const rates = document
+                    .getElementById("tab" + j)
+                    .querySelectorAll('input[name="rate' + j + '"]');
+                const verdicts = document
+                    .getElementById("tab" + j)
+                    .querySelectorAll('input[name="verdict' + j + '"]');
+                let rate_flag = false;
+                let verdict_flag = false;
+                for (let i = 0; i < rates.length; i++) {
+                    if (rates[i].checked) {
+                        rate_flag = true;
+                        break;
+                    }
+                }
+                for (let i = 0; i < verdicts.length; i++) {
+                    if (verdicts[i].checked) {
+                        verdict_flag = true;
+                        break;
+                    }
+                }
+                result.push(rate_flag && verdict_flag);
+            }
+            return result;
+        }
+    });
+
+</script>
