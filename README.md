@@ -6,7 +6,7 @@ An interactive version of the database is available under: https://goofy-grouse-
 The underlying xlsx file can be found in the *database folder*. The 32 columns of meta-information provided are described in detail in Appendix B of the paper.
 
 Versions:
-- v1.1: update D31, correct ID D31a to D32a
+- v1.1: update entry D31, correct ID D31a to D32a
 
 ## Experiments
 All code can be found in the *database folder*.
